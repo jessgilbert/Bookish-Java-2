@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class BookService {
     private String hostname = "localhost";
-    private String database = "bookish";
+    private String database = "test";
     private String user = "bookish";
     private String password = "bookish";
     private String connectionString = "jdbc:mysql://" + hostname + "/" + database + "?user=" + user + "&password=" + password + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT&useSSL=false";
@@ -17,7 +17,7 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         List<Book> books = jdbi.withHandle(handle ->
-            handle.createQuery("SELECT * FROM books")
+            handle.createQuery("SELECT * FROM booklist")
                 .mapToBean(Book.class)
                 .list()
         );
@@ -27,7 +27,7 @@ public class BookService {
 
     public void addBook(Book book) {
         jdbi.withHandle(handle ->
-            handle.createUpdate("INSERT INTO books (author, title) VALUES (:author, :title)")
+            handle.createUpdate("INSERT INTO booklist (Author, BookName) VALUES (:Author, :BookName)")
                 .bindBean(book)
                 .execute()
         );
@@ -35,7 +35,7 @@ public class BookService {
 
     public void deleteBook(int bookId) {
         jdbi.withHandle(handle ->
-            handle.createUpdate("DELETE FROM books WHERE id = :id")
+            handle.createUpdate("DELETE FROM books WHERE BookID = :BookID")
                 .bind("id", bookId)
                 .execute()
         );

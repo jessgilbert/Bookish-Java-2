@@ -1,31 +1,32 @@
 package org.softwire.training.bookish.databaseModels;
 
 public class Book {
-    private int id;
-    private String title;
-    private String author;
 
-    public int getId() {
-        return id;
+    public int BookID;
+    public String BookName;
+    public String Author;
+
+    public int getBookID() {
+        return BookID;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public String getBookName() {
+        return BookName;
     }
 
     public String getAuthor() {
-        return author;
+        return Author;
+    }
+
+    public void setBookID(int bookID) {
+        this.BookID = bookID;
+    }
+
+    public void setBookName(String bookName) {
+        this.BookName = bookName;
     }
 
     public void setAuthor(String author) {
-        this.author = author;
+        this.Author = author;
     }
 }

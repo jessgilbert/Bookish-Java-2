@@ -1,15 +1,14 @@
-package org.softwire.training.bookish;
+package org.softwire.training.bookish.databaseModels;
 
-public class CustomerList {
-
-    private int CustomerID;
+public class Customers {
+    private int PersonID;
     private String Email;
     private String Password;
     private String FirstName;
     private String Surname;
 
     public int getPersonID() {
-        return CustomerID;
+        return PersonID;
     }
 
     public String getEmail() {
@@ -28,8 +27,8 @@ public class CustomerList {
         return Surname;
     }
 
-    public void setCustomerID(int customerID) {
-        this.CustomerID = customerID;
+    public void setPersonID(int personID) {
+        this.PersonID = personID;
     }
 
     public void setEmail(String email) {

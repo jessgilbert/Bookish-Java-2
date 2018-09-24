@@ -1,9 +1,8 @@
-package org.softwire.training.bookish;
+package org.softwire.training.bookish.databaseModels;
 
 import java.time.LocalDate;
 
 public class BookCopy {
-
     private int CopyID;
     private int BookID;
     private String CheckedOutBy;

@@ -23,10 +23,10 @@
                 </thead>
                 <tbody>
                     <tr th:each="book : ${model.books}">
-                        <td th:text="${book.author}"></td>
-                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.Author}"></td>
+                        <td th:text="${book.BookName}"></td>
                         <td>
-                            <a th:href="${'/books/delete?bookId=' + book.id}">Delete</a>
+                            <a th:href="${'/books/delete?bookId=' + book.BookID}">Delete</a>
                         </td>
                     </tr>
                 </tbody>
@@ -37,7 +37,7 @@
                 <div>
                     <label>
                         Author:
-                        <input type="text" name="author">
+                        <input type="text" name="Author">
                     </label>
                 </div>
                 <div>

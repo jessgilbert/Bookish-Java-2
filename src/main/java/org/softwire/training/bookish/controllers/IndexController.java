@@ -1,8 +1,11 @@
 package org.softwire.training.bookish.controllers;
 
 import org.softwire.training.bookish.databaseModels.Book;
+import org.softwire.training.bookish.databaseModels.Customers;
 import org.softwire.training.bookish.services.BookService;
+import org.softwire.training.bookish.services.CustomerService;
 import org.softwire.training.bookish.viewModels.BooksPageModel;
+import org.softwire.training.bookish.viewModels.CustomersPageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +30,7 @@ public class IndexController {
         return new ModelAndView("index");
     }
 
-    @RequestMapping("/books")
+    @RequestMapping("/allBooks")
     ModelAndView books() {
 
         List<Book> allBooks = bookService.getAllBooks();
@@ -38,20 +41,33 @@ public class IndexController {
         return new ModelAndView("books", "model", booksPageModel);
     }
 
-    @RequestMapping("/books/add")
+    @RequestMapping("/allBooks/add")
     RedirectView addBook(@ModelAttribute Book book) {
 
         bookService.addBook(book);
 
-        return new RedirectView("/books");
+        return new RedirectView("/allBooks");
     }
 
-    @RequestMapping("/books/delete")
+    @RequestMapping("/allBooks/delete")
     RedirectView deleteBook(@RequestParam int bookId) {
 
         bookService.deleteBook(bookId);
 
-        return new RedirectView("/books");
+        return new RedirectView("/allBooks");
+    }
+
+    @Autowired
+    private CustomerService customerService;
+
+    @RequestMapping("/Customers")
+    ModelAndView customers() {
+        List<Customers> allCustomers = customerService.getAllCustomers();
+
+        CustomersPageModel customersPageModel = new CustomersPageModel();
+        customersPageModel.customers = allCustomers;
+
+        return new ModelAndView("customers", "model", customersPageModel);
     }
 
 }
