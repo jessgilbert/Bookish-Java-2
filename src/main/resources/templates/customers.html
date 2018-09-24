@@ -32,28 +32,40 @@
             <td th:text="${customers.Email}"></td>
             <td th:text="${customers.Password}"></td>
             <td>
-                <a th:href="${'/Customers/delete?PersonID=' + customers.PersonID}">Delete</a>
+                <a th:href="${'/Customers/delete?personId=' + customers.PersonID}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <h2>Add a book:</h2>
+    <h2>Add a new Customer:</h2>
     <form id="messageForm" th:action="@{/Customers/add}" method="post">
         <div>
             <label>
-                Author:
-                <input type="text" name="Author">
+                Email:
+                <input type="text" name="Email">
             </label>
         </div>
         <div>
             <label>
-                Title:
-                <input type="text" name="title">
+                Password:
+                <input type="text" name="Password">
             </label>
         </div>
         <div>
-            <input type="submit" value="Add book" />
+            <label>
+                First Name:
+                <input type="text" name="FirstName">
+            </label>
+        </div>
+        <div>
+            <label>
+                Surname:
+                <input type="text" name="Surname">
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Add customer" />
         </div>
     </form>
 

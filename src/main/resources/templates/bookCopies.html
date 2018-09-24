@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Bookish - Home</title>
+</head>
+<body>
+<div layout:fragment="content" class="container body-content">
+    <div class="jumbotron">
+        <h1>Bookish</h1>
+        <p class="lead">Welcome to the Bookish application</p>
+    </div>
+    <h3>${book.BookName}:</h3>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Book Copy ID</th>
+            <th>Book ID</th>
+            <th>Checked Out By</th>
+            <th>Return Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${model.books}">
+            <td th:text="${book.CopyID}"></td>
+            <td th:text="${book.BookID}"></td>
+            <td th:text="${book.CheckedOutBy}"></td>
+            <td th:text="${book.ReturnDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h4>Add a book:</h4>
+    <form id="messageForm" th:action="@{/allBooks/add}" method="post">
+        <div>
+            <label>
+                Author:
+                <input type="text" name="Author">
+            </label>
+        </div>
+        <div>
+            <label>
+                Book Title:
+                <input type="text" name="BookName">
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Add book" />
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

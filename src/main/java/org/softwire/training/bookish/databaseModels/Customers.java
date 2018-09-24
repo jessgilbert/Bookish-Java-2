@@ -27,8 +27,8 @@ public class Customers {
         return Surname;
     }
 
-    public void setPersonID(int personID) {
-        this.PersonID = personID;
+    public void setPersonID(int personId) {
+        this.PersonID = personId;
     }
 
     public void setEmail(String email) {

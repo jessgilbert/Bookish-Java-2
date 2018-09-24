@@ -26,4 +26,20 @@ public class CustomerService {
 
         return customers;
     }
+
+    public void addCustomer(Customers customers) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("INSERT INTO test.customerlist (Email, Password, FirstName, Surname) VALUES (:email, :password, :firstName, :surname)")
+                        .bindBean(customers)
+                        .execute()
+        );
+    }
+
+    public void deleteCustomer(int personId) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM test.customerlist WHERE PersonID = :personId")
+                        .bind("personId", personId)
+                        .execute()
+        );
+    }
 }

@@ -40,4 +40,15 @@ public class BookService {
                 .execute()
         );
     }
+
+    public List<Book> searchForBook(String searched) {
+            List<Book> searchedBooks = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM test.booklist WHERE BookName=:search")
+                        .bind("search", searched)
+                        .mapToBean(Book.class)
+                        .list()
+        );
+
+        return searchedBooks;
+    }
 }

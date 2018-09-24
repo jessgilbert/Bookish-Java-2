@@ -57,6 +57,35 @@ public class IndexController {
         return new RedirectView("/allBooks");
     }
 
+    @RequestMapping("/Customers/add")
+    RedirectView addCustomer(@ModelAttribute Customers customers) {
+
+        customerService.addCustomer(customers);
+
+        return new RedirectView("/Customers");
+    }
+
+    @RequestMapping("/Customers/delete")
+    RedirectView deleteCustomer(@RequestParam int personId) {
+
+        customerService.deleteCustomer(personId);
+
+        return new RedirectView("/Customers");
+    }
+
+
+    @RequestMapping("/allBooks/search")
+    ModelAndView searchForBook(@RequestParam String searched) {
+
+        List<Book> allBooks = bookService.searchForBook(searched);
+
+        BooksPageModel booksPageModel = new BooksPageModel();
+        booksPageModel.books = allBooks;
+
+        return new ModelAndView("books", "model", booksPageModel);
+
+    }
+
     @Autowired
     private CustomerService customerService;
 
