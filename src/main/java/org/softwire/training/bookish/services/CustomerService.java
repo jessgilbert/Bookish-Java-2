@@ -41,5 +41,17 @@ public class CustomerService {
                         .bind("personId", personId)
                         .execute()
         );
+
+    }
+
+
+    public List<Customers> searchForCustomers(String CustomerSearched) {
+        List<Customers> searchedCustomers = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM test.customerlist WHERE FirstName=:search")
+                        .bind("search", CustomerSearched)
+                        .mapToBean(Customers.class)
+                        .list()
+        );
+        return searchedCustomers;
     }
 }

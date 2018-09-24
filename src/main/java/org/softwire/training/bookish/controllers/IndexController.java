@@ -75,9 +75,9 @@ public class IndexController {
 
 
     @RequestMapping("/allBooks/search")
-    ModelAndView searchForBook(@RequestParam String searched) {
+    ModelAndView searchForBook(@RequestParam String BookSearched) {
 
-        List<Book> allBooks = bookService.searchForBook(searched);
+        List<Book> allBooks = bookService.searchForBook(BookSearched);
 
         BooksPageModel booksPageModel = new BooksPageModel();
         booksPageModel.books = allBooks;
@@ -85,6 +85,22 @@ public class IndexController {
         return new ModelAndView("books", "model", booksPageModel);
 
     }
+
+    @RequestMapping("/Customers/search")
+    ModelAndView searchForCustomers(@RequestParam String CustomerSearched) {
+
+        List<Customers> allCustomers = customerService.searchForCustomers(CustomerSearched);
+
+        CustomersPageModel customersPageModel = new CustomersPageModel();
+        customersPageModel.customers = allCustomers;
+
+        return new ModelAndView("customers", "model", customersPageModel);
+
+    }
+
+
+
+
 
     @Autowired
     private CustomerService customerService;
