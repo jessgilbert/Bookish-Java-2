@@ -8,10 +8,10 @@ import java.util.List;
 
 public class Main {
     private static String hostname = "localhost";
-    private static String database = "bookish";
+    private static String database = "test";
     private static String user = "bookish";
     private static String password = "bookish";
-    private static String connectionString = "jdbc:mysql://" + hostname + "/" + database + "?user=" + user + "&password=" + password + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT&useSSL=false";
+    private static String connectionString = "jdbc:mysql://" + hostname + "/" + database + "?user=" + user + "&password=" + password + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true";
 
     public static void main(String[] args) throws SQLException {
         System.out.println("JDBC method...");
@@ -25,15 +25,15 @@ public class Main {
         Connection connection = DriverManager.getConnection(connectionString);
         try (Statement statement = connection.createStatement()) {
 
-            String query = "SELECT * FROM books";
+            String query = "SELECT * FROM booklist";
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                int bookId = resultSet.getInt("id");
-                String author = resultSet.getString("author");
-                String title = resultSet.getString("title");
+                int BookID = resultSet.getInt("BookId");
+                String Author = resultSet.getString("Author");
+                String BookName = resultSet.getString("BookName");
 
-                System.out.println("Book ID: " + bookId + " has author: '" + author + "' and title: '" + title + "'");
+                    System.out.println("Book ID: " + BookID + " has author: '" + Author + "' and title: '" + BookName + "'");
             }
         }
     }
@@ -41,14 +41,14 @@ public class Main {
     private static void jdbiMethod() {
         Jdbi jdbi = Jdbi.create(connectionString);
 
-        List<Book> books = jdbi.withHandle(handle ->
-            handle.createQuery("SELECT * FROM books")
-                .mapToBean(Book.class)
+        List<BookList> books = jdbi.withHandle(handle ->
+            handle.createQuery("SELECT * FROM booklist")
+                .mapToBean(BookList.class)
                 .list()
         );
 
-        for (Book book: books) {
-            System.out.println("Book ID: " + book.getId() + " has author: '" + book.getAuthor() + "' and title: '" + book.getTitle() + "'");
+        for (BookList book: books) {
+            System.out.println("Book ID: " + book.getBookID() + " has author: '" + book.getAuthor() + "' and title: '" + book.getBookName() + "'");
         }
     }
 }
