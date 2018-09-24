@@ -1,7 +1,9 @@
 package org.softwire.training.bookish.databaseModels;
 
+//This is object book that has info for everything we need to know about book//
 public class Book {
 
+    //declaring variables//
     public int BookID;
     public String BookName;
     public String Author;
@@ -9,11 +11,9 @@ public class Book {
     public int getBookID() {
         return BookID;
     }
-
     public String getBookName() {
         return BookName;
     }
-
     public String getAuthor() {
         return Author;
     }
