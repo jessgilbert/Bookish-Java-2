@@ -98,21 +98,6 @@ public class IndexController {
 
     }
 
-//    @RequestMapping("/Customers/search")
-//    ModelAndView searchForCustomersSurname(@RequestParam String CustomerSearched) {
-//
-//        List<Customers> allCustomers = customerService.searchForCustomersSurname(CustomerSearched);
-//
-//        CustomersPageModel customersPageModel = new CustomersPageModel();
-//        customersPageModel.customers = allCustomers;
-//
-//        return new ModelAndView("customers", "model", customersPageModel);
-//
-//    }
-
-
-
-
     @Autowired
     private CustomerService customerService;
 
