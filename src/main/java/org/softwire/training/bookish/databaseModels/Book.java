@@ -18,8 +18,8 @@ public class Book {
         return Author;
     }
 
-    public void setBookID(int bookID) {
-        this.BookID = bookID;
+    public void setBookID(int bookId) {
+        this.BookID = bookId;
     }
 
     public void setBookName(String bookName) {

@@ -27,7 +27,7 @@ public class BookService {
 
     public void addBook(Book book) {
         jdbi.withHandle(handle ->
-            handle.createUpdate("INSERT INTO booklist (Author, BookName) VALUES (:Author, :BookName)")
+            handle.createUpdate("INSERT INTO test.booklist (BookName, Author) VALUES (:bookName,:author)")
                 .bindBean(book)
                 .execute()
         );
@@ -35,8 +35,8 @@ public class BookService {
 
     public void deleteBook(int bookId) {
         jdbi.withHandle(handle ->
-            handle.createUpdate("DELETE FROM books WHERE BookID = :BookID")
-                .bind("id", bookId)
+            handle.createUpdate("DELETE FROM test.booklist WHERE BookId = :bookId")
+                .bind("bookId", bookId)
                 .execute()
         );
     }
