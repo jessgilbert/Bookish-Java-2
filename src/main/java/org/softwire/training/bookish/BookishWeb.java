@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @SpringBootApplication
 public class BookishWeb {
-
+    //test//
     public static void main(String[] args) {
         SpringApplication.run(BookishWeb.class, args);
     }
