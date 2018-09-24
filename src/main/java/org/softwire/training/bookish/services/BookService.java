@@ -43,7 +43,7 @@ public class BookService {
 
     public List<Book> searchForBook(String BookSearched) {
             List<Book> searchedBooks = jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM test.booklist WHERE BookName=:search")
+                handle.createQuery("SELECT * FROM test.booklist WHERE BookName=:search OR Author=:search OR BookID=:search")
                         .bind("search", BookSearched)
                         .mapToBean(Book.class)
                         .list()

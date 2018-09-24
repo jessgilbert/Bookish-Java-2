@@ -47,11 +47,21 @@ public class CustomerService {
 
     public List<Customers> searchForCustomers(String CustomerSearched) {
         List<Customers> searchedCustomers = jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM test.customerlist WHERE FirstName=:search")
+                handle.createQuery("SELECT * FROM test.customerlist WHERE FirstName =:search OR surname =:search OR Email =:search OR PersonID=:search")
                         .bind("search", CustomerSearched)
                         .mapToBean(Customers.class)
                         .list()
         );
         return searchedCustomers;
     }
+
+//    public List<Customers> searchForCustomersSurname(String CustomerSearched) {
+//        List<Customers> searchedCustomers = jdbi.withHandle(handle ->
+//                handle.createQuery("SELECT * FROM test.customerlist WHERE surname=:search")
+//                        .bind("search", CustomerSearched)
+//                        .mapToBean(Customers.class)
+//                        .list()
+//        );
+//        return searchedCustomers;
+//    }
 }
