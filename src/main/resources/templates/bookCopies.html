@@ -29,7 +29,7 @@
             <td th:text="${book.CheckedOutBy}"></td>
             <td th:text="${book.ReturnDate}"></td>
             <td>
-            <a th:href="${'/allBooks/bookcopy?bookId=:book.BookID/delete?copyId=' + book.CopyID}">Delete</a>
+                <a th:href="${'/allBooks/bookcopy/delete?copyId=' + book.CopyID + '&bookId=' + book.BookID}">Delete</a>
             </td>
         </tr>
         </tbody>
@@ -52,20 +52,20 @@
     <form id="messageFormBook" th:action="@{/allBooks/bookcopy/addCheckout}" method="post">
         <div>
             <label>
-                Book ID:
-                <input type="text" name="BookID">
-            </label>
-        </div>
-        <div>
-            <label>
                 Copy ID:
-                <input type="text" name="CopyID">
+                <input type="text" name="copyId">
             </label>
         </div>
         <div>
             <label>
                 Person ID:
-                <input type="text" name="PersonID">
+                <input type="text" name="personId">
+            </label>
+        </div>
+        <div>
+            <label>
+                Book ID:
+                <input type="text" name="bookId">
             </label>
         </div>
         <div>

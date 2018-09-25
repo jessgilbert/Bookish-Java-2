@@ -171,25 +171,24 @@ public class IndexController {
         return new RedirectView("/allBooks/bookcopy?bookId=" + book.BookID);
     }
 
-    @RequestMapping("/allBooks/bookcopy/delete")
         //gets the book id value as int from book html//
-    RedirectView deleteBookCopy(@RequestParam String copyId) {
+    @RequestMapping("/allBooks/bookcopy/delete")
+    RedirectView deleteBookCopy(@RequestParam int bookId, @RequestParam int copyId) {
 
-        System.out.println(copyId);
-
-        //calls deleteBook in bookService class passing through bookId//
-       // bookCopyService.deleteBookCopy(copyId);
+        bookCopyService.deleteBookCopy(copyId);
 
         //reloads the /allBooks page//
-        return new RedirectView("/allBooks/bookcopy");
+        return new RedirectView("/allBooks/bookcopy?bookId=" + bookId);
     }
 
     @RequestMapping("/allBooks/bookcopy/addCheckout")
-    RedirectView addCheckOut(@ModelAttribute BookCopy bookCopy) {
+    RedirectView addCheckOut(@RequestParam int copyId, @RequestParam int personId, @RequestParam int bookId) {
 
-        bookCopyService.addCheckOut(bookCopy);
+        System.out.println("Your nana smells");
 
-        return new RedirectView("/allBooks/bookcopy");
+        bookCopyService.addCheckOut(personId, copyId);
+
+        return new RedirectView("/allBooks/bookcopy?bookId=" + bookId);
     }
 
 //    //displays table of all books//

@@ -44,10 +44,11 @@ public class BookCopyService {
         );
     }
 
-    public void addCheckOut(Customers customers) {
+    public void addCheckOut(int personId, int copyId) {
         jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE `test`.`bookcopies` SET `CheckedOutBy` = :personId WHERE (`CopyID` = :copyId")
-                        .bind("personId", PersonID)
+                handle.createUpdate("UPDATE `test`.`bookcopies` SET `CheckedOutBy` = :personId WHERE `CopyID` = :copyId")
+                        .bind("personId", personId)
+                        .bind("copyId", copyId)
                         .execute()
         );
     }
