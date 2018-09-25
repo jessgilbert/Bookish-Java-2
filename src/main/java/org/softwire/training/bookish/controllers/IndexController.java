@@ -1,9 +1,12 @@
 package org.softwire.training.bookish.controllers;
 
 import org.softwire.training.bookish.databaseModels.Book;
+import org.softwire.training.bookish.databaseModels.BookCopy;
 import org.softwire.training.bookish.databaseModels.Customers;
+import org.softwire.training.bookish.services.BookCopyService;
 import org.softwire.training.bookish.services.BookService;
 import org.softwire.training.bookish.services.CustomerService;
+import org.softwire.training.bookish.viewModels.BookCopyPageModel;
 import org.softwire.training.bookish.viewModels.BooksPageModel;
 import org.softwire.training.bookish.viewModels.CustomersPageModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,5 +144,65 @@ public class IndexController {
         //creates the page with html customers and with object customersPageModel//
         return new ModelAndView("customers", "model", customersPageModel);
     }
+
+    @Autowired
+    private BookCopyService bookCopyService;
+
+    @RequestMapping("/allBooks/bookcopy")
+    ModelAndView bookCopies(@RequestParam int bookId) {
+
+        //creates table of all given books copies//
+        List<BookCopy> allBookCopies = bookCopyService.getAllBooks(bookId);
+
+        //creates new page instance to display the book copies and then sends the page the list//
+        BookCopyPageModel bookCopyPageModel = new BookCopyPageModel();
+        bookCopyPageModel.bookCopies = allBookCopies;
+
+        //creates page using "books" html and class bookPageModel, using model to call the class//
+        return new ModelAndView("bookCopies", "model", bookCopyPageModel);
+    }
+
+
+    @RequestMapping("/allBooks/bookcopy/add")
+    RedirectView addBookCopies(@ModelAttribute BookCopy book) {
+
+        bookCopyService.addBookCopy(book);
+
+        return new RedirectView("/allBooks/bookcopy?bookId=" + book.BookID);
+    }
+
+    @RequestMapping("/allBooks/bookcopy/delete")
+        //gets the book id value as int from book html//
+    RedirectView deleteBookCopy(@RequestParam String copyId) {
+
+        System.out.println(copyId);
+
+        //calls deleteBook in bookService class passing through bookId//
+       // bookCopyService.deleteBookCopy(copyId);
+
+        //reloads the /allBooks page//
+        return new RedirectView("/allBooks/bookcopy");
+    }
+
+    @RequestMapping("/allBooks/bookcopy/addCheckout")
+    RedirectView addCheckOut(@ModelAttribute BookCopy bookCopy) {
+
+        bookCopyService.addCheckOut(bookCopy);
+
+        return new RedirectView("/allBooks/bookcopy");
+    }
+
+//    //displays table of all books//
+//    @RequestMapping("/checkOut")
+//    ModelAndView checkOut() {
+//
+//        //creates table of all given books//
+//        List<Book> allBooks = bookService.getAllBooks();
+//
+//        //creates new page instance to display the books and then sends the page the list//
+//        BooksPageModel booksPageModel = new BooksPageModel();
+//        booksPageModel.books = allBooks;
+//
+//        //creates page using "books" html and class bookPageModel, using model to call the class//return new ModelAndView("checkOut", "model", CheckOutPageModel);
 
 }

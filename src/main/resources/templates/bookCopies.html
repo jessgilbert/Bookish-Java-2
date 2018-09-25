@@ -11,44 +11,68 @@
         <h1>Bookish</h1>
         <p class="lead">Welcome to the Bookish application</p>
     </div>
-    <h3>${book.BookName}:</h3>
+    <h3>Copies Available</h3>
     <table class="table">
         <thead class="thead-light">
         <tr>
-            <th>Book Copy ID</th>
+            <th>Copy ID</th>
             <th>Book ID</th>
             <th>Checked Out By</th>
             <th>Return Date</th>
+            <th>Delete Book Copy?</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="book : ${model.books}">
+        <tr th:each="book : ${model.bookCopies}">
             <td th:text="${book.CopyID}"></td>
             <td th:text="${book.BookID}"></td>
             <td th:text="${book.CheckedOutBy}"></td>
             <td th:text="${book.ReturnDate}"></td>
+            <td>
+            <a th:href="${'/allBooks/bookcopy?bookId=:book.BookID/delete?copyId=' + book.CopyID}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
 
-    <h4>Add a book:</h4>
-    <form id="messageForm" th:action="@{/allBooks/add}" method="post">
+    <h4>Add a new Copy:</h4>
+    <form id="messageFormBook" th:action="@{/allBooks/bookcopy/add}" method="post">
         <div>
             <label>
-                Author:
-                <input type="text" name="Author">
+                Book ID:
+                <input type="text" name="BookID">
             </label>
         </div>
         <div>
-            <label>
-                Book Title:
-                <input type="text" name="BookName">
-            </label>
-        </div>
-        <div>
-            <input type="submit" value="Add book" />
+            <input type="submit" value="Add Copy" />
         </div>
     </form>
+
+    <h4>Add a new Checkout:</h4>
+    <form id="messageFormBook" th:action="@{/allBooks/bookcopy/addCheckout}" method="post">
+        <div>
+            <label>
+                Book ID:
+                <input type="text" name="BookID">
+            </label>
+        </div>
+        <div>
+            <label>
+                Copy ID:
+                <input type="text" name="CopyID">
+            </label>
+        </div>
+        <div>
+            <label>
+                Person ID:
+                <input type="text" name="PersonID">
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Add Checkout" />
+        </div>
+    </form>
+
 
 </div>
 </body>

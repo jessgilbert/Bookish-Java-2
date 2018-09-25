@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Bookish - Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content" class="container body-content">
+    <div class="jumbotron">
+        <h1>Bookish</h1>
+        <p class="lead">Welcome to the Bookish application</p>
+    </div>
+
+    <form id="messageForm2" th:action="@{/allBooks/search}" method="post">
+        <div class="input-group">
+            <input name="BookSearched" type="text" class="form-control" placeholder="Search for: Book Name / Author">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <h3>Add Book:</h3>
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>Book ID</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Add to Check-out</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${model.books}">
+            <td th:text="${book.BookID}"></td>
+            <td th:text="${book.Author}"></td>
+            <td th:text="${book.BookName}"></td>
+            <td>
+                <a th:href="${'/allBooks/bookcopy?bookId=' + book.BookID}">Add</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Add Customers:</h2>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Person ID</th>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Delete?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customers : ${model.customers}">
+            <td th:text="${customers.PersonID}"></td>
+            <td th:text="${customers.FirstName}"></td>
+            <td th:text="${customers.Surname}"></td>
+            <td th:text="${customers.Email}"></td>
+            <td th:text="${customers.Password}"></td>
+            <td>
+                <a th:href="${'/Customers/delete?personId=' + customers.PersonID}">Add</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Copies Available</h3>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Copy ID</th>
+            <th>Book ID</th>
+            <th>Checked Out By</th>
+            <th>Return Date</th>
+            <th>Delete Book Copy?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${model.bookCopies}">
+            <td th:text="${book.CopyID}"></td>
+            <td th:text="${book.BookID}"></td>
+            <td th:text="${book.CheckedOutBy}"></td>
+            <td th:text="${book.ReturnDate}"></td>
+            <td>
+                <a th:href="${'/allBooks/bookcopy?bookId=:book.BookID/delete?copyId=' + book.CopyID}">Add</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

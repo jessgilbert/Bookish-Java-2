@@ -3,10 +3,10 @@ package org.softwire.training.bookish.databaseModels;
 import java.time.LocalDate;
 
 public class BookCopy {
-    private int CopyID;
-    private int BookID;
-    private String CheckedOutBy;
-    private LocalDate ReturnDate;
+    public int CopyID;
+    public int BookID;
+    public String CheckedOutBy;
+    public LocalDate ReturnDate;
 
     public int getCopyID() {
         return CopyID;

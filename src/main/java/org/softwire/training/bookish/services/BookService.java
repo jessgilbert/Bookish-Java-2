@@ -2,6 +2,7 @@ package org.softwire.training.bookish.services;
 
 import org.jdbi.v3.core.Jdbi;
 import org.softwire.training.bookish.databaseModels.Book;
+import org.softwire.training.bookish.databaseModels.BookCopy;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -27,10 +28,22 @@ public class BookService {
 
     public void addBook(Book book) {
         jdbi.withHandle(handle ->
-            handle.createUpdate("INSERT INTO test.booklist (BookName, Author) VALUES (:bookName,:author)")
-                .bindBean(book)
-                .execute()
+                handle.createUpdate("INSERT INTO test.booklist (BookName, Author) VALUES (:bookName,:author)")
+                        .bindBean(book)
+                        .execute()
+
         );
+
+    }
+
+    public List<BookCopy> getAllBookCopies() {
+        List<BookCopy> bookCopies = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM booklist WHERE BookId = :bookId")
+                        .mapToBean(BookCopy.class)
+                        .list()
+        );
+
+        return bookCopies;
     }
 
     public void deleteBook(int bookId) {
