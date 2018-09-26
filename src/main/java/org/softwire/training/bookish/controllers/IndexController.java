@@ -2,12 +2,14 @@ package org.softwire.training.bookish.controllers;
 
 import org.softwire.training.bookish.databaseModels.Book;
 import org.softwire.training.bookish.databaseModels.BookCopy;
+import org.softwire.training.bookish.services.CheckoutService;
 import org.softwire.training.bookish.databaseModels.Customers;
 import org.softwire.training.bookish.services.BookCopyService;
 import org.softwire.training.bookish.services.BookService;
 import org.softwire.training.bookish.services.CustomerService;
 import org.softwire.training.bookish.viewModels.BookCopyPageModel;
 import org.softwire.training.bookish.viewModels.BooksPageModel;
+import org.softwire.training.bookish.viewModels.CheckOutPageModel;
 import org.softwire.training.bookish.viewModels.CustomersPageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -181,27 +183,73 @@ public class IndexController {
         return new RedirectView("/allBooks/bookcopy?bookId=" + bookId);
     }
 
-    @RequestMapping("/allBooks/bookcopy/addCheckout")
-    RedirectView addCheckOut(@RequestParam int copyId, @RequestParam int personId, @RequestParam int bookId) {
 
-        System.out.println("Your nana smells");
+    @Autowired
+    private CheckoutService checkoutService;
 
-        bookCopyService.addCheckOut(personId, copyId);
+    @RequestMapping("/allBooks/bookcopy/checkOut")
+     ModelAndView addCheckOut(@RequestParam int copyId) {
 
-        return new RedirectView("/allBooks/bookcopy?bookId=" + bookId);
+        //creates list customers with all the customers//
+        List<Customers> allCustomers = customerService.getAllCustomers();
+
+        //creates new instance of the page//
+       CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
+        checkOutPageModel.customers = allCustomers;
+
+        //"/allBooks/bookcopy/checkOut?copyId=" + copyId
+        return new ModelAndView("checkOut","model",checkOutPageModel);
     }
 
-//    //displays table of all books//
-//    @RequestMapping("/checkOut")
-//    ModelAndView checkOut() {
-//
-//        //creates table of all given books//
-//        List<Book> allBooks = bookService.getAllBooks();
-//
-//        //creates new page instance to display the books and then sends the page the list//
-//        BooksPageModel booksPageModel = new BooksPageModel();
-//        booksPageModel.books = allBooks;
-//
-//        //creates page using "books" html and class bookPageModel, using model to call the class//return new ModelAndView("checkOut", "model", CheckOutPageModel);
+    @RequestMapping("allBooks/bookcopy/checkOut/search")
+    ModelAndView searchForCheckOut(@RequestParam String CustomerSearched) {
 
+        //makes customers into list equal to what you've searched//
+        List<Customers> allCustomers = checkoutService.searchForCheckOut(CustomerSearched);
+
+        //creates new instance of the page//
+        CheckOutPageModel checkoutPageModel = new CheckOutPageModel();
+        checkoutPageModel.customers = allCustomers;
+
+        //re-displays the page with only the customers you searched showing//
+        return new ModelAndView("customers", "model", checkoutPageModel);
+
+    }
+//
+//        //displays table of all books//
+//        @RequestMapping("/checkOut")
+//        ModelAndView checkOut() {
+//            //makes customers into list equal to what you've searched//
+//            List<Customers> allCustomers = checkoutService
+//            List<Book> allBooks;
+//            List<BookCopy> allBookCopies;
+//
+//            CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
+//
+//            checkOutPageModel.customers = allCustomers;
+//            checkOutPageModel.books = allBooks;
+//            checkOutPageModel.bookCopies = allBookCopies;
+//
+//            return new ModelAndView("checkOut","model",checkOutPageModel);
+//        }
+//
+//
+//    @RequestMapping("/checkOut/search")
+//    ModelAndView searchForCustomersAndBooks(@RequestParam String CustomerSearched, @RequestParam String BookSearched, @RequestParam String CopySearched) {
+//
+//        //makes customers into list equal to what you've searched//
+//        List<Customers> allCustomers = checkoutService.searchForCustomers(CustomerSearched);
+//        List<Book> allBooks =checkoutService.searchForBook(BookSearched);
+//        List<BookCopy> allBookCopies = checkoutService.searchForBookCopy(CopySearched);
+//
+//        //creates new instance of the page//
+//        CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
+//
+//        checkOutPageModel.customers = allCustomers;
+//        checkOutPageModel.books = allBooks;
+//        checkOutPageModel.bookCopies = allBookCopies;
+//
+//        //re-displays the page with only the customers you searched showing//
+//        return new ModelAndView("checkOut", "model", checkOutPageModel);
+//    }
 }

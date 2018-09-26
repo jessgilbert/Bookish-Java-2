@@ -44,6 +44,17 @@ public class BookCopyService {
         );
     }
 
+    public List<BookCopy> searchForBookCopy(String BookSearched) {
+        List<BookCopy> searchedBooks = jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM test.bookcopies WHERE BookID=:search OR CopyID=:search")
+                        .bind("search", BookSearched)
+                        .mapToBean(BookCopy.class)
+                        .list()
+        );
+
+        return searchedBooks;
+    }
+
     public void addCheckOut(int personId, int copyId) {
         jdbi.withHandle(handle ->
                 handle.createUpdate("UPDATE `test`.`bookcopies` SET `CheckedOutBy` = :personId WHERE `CopyID` = :copyId")
@@ -52,4 +63,6 @@ public class BookCopyService {
                         .execute()
         );
     }
+
 }
+
