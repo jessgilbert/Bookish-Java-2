@@ -39,7 +39,8 @@
         <h1>Check Out</h1>
         <p class="lead">Welcome to the Bookish application</p>
     </div>
-    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Find a Person ID...">
 
     <h2>Customers:</h2>
 
@@ -63,20 +64,13 @@
         </tbody>
     </table>
 
-
     <h4>Add a new Checkout:</h4>
-    <form id="messageFormBook" th:action="@{'/allBooks/bookcopy/checkOut/?copyId=' + book.CopyID}" method="post">
+    <form id="messageFormBook" th:action="@{'/allBooks/bookcopy/checkOut/add'}" method="post">
         <div>
-            <label>
-                Book ID:
-                <input type="text" name="bookId">
-            </label>
+                <input type="hidden" name="bookId" th:value="${model.bookId}">
         </div>
         <div>
-            <label>
-                Copy ID:
-                <input type="text" name="copyId">
-            </label>
+                <input type="hidden" name="copyId" th:value="${model.copyId}">
         </div>
         <div>
             <label>
@@ -87,6 +81,26 @@
 
         <div>
             <input type="submit" value="Add Checkout" />
+        </div>
+    </form>
+
+    <h4>Delete a Checkout:</h4>
+    <form id="messageFormBook" th:action="@{'/allBooks/bookcopy/checkOut/delete'}" method="post">
+        <div>
+            <input type="hidden" name="bookId" th:value="${model.bookId}">
+        </div>
+        <div>
+            <input type="hidden" name="copyId" th:value="${model.copyId}">
+        </div>
+        <div>
+            <label>
+                Person ID:
+                <input type="text" name="personId">
+            </label>
+        </div>
+
+        <div>
+            <input type="submit" value="Delete Checkout" />
         </div>
     </form>
 

@@ -20,6 +20,7 @@ public class CheckoutService {
 
     public List<Customers> searchForCheckOut(String CustomerSearched) {
         List<Customers> searchedCustomers = jdbi.withHandle(handle ->
+
                 handle.createQuery("SELECT * FROM test.customerlist WHERE FirstName =:search OR surname =:search OR Email =:search OR PersonID=:search")
                         .bind("search", CustomerSearched)
                         .mapToBean(Customers.class)

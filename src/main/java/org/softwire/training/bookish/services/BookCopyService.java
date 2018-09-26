@@ -57,12 +57,21 @@ public class BookCopyService {
 
     public void addCheckOut(int personId, int copyId) {
         jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE `test`.`bookcopies` SET `CheckedOutBy` = :personId WHERE `CopyID` = :copyId")
+                //                UPDATE `test`.`bookcopies` SET `CheckedOutBy` = '3', `ReturnDate` = '2018-10-03' WHERE (`CopyID` = '33');
+                handle.createUpdate("UPDATE `test`.`bookcopies` SET `CheckedOutBy` = :personId, `ReturnDate` = NOW() + INTERVAL 21 DAY WHERE `CopyID` = :copyId")
                         .bind("personId", personId)
                         .bind("copyId", copyId)
                         .execute()
         );
     }
 
+    public void deleteCheckOut( int copyId) {
+        jdbi.withHandle(handle ->
+                //                UPDATE `test`.`bookcopies` SET `CheckedOutBy` = '3', `ReturnDate` = '2018-10-03' WHERE (`CopyID` = '33');
+//                DELETE FROM test.booklist WHERE BookId = :bookId
+                handle.createUpdate("UPDATE `test`.`bookcopies` SET `CheckedOutBy` = NULL, `ReturnDate` = NULL WHERE `CopyID` = :copyId")
+                        .bind("copyId", copyId)
+                        .execute()
+        );
+    }
 }
-

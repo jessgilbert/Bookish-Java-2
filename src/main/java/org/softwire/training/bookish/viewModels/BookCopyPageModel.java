@@ -6,4 +6,5 @@ import java.util.List;
 
 public class BookCopyPageModel {
     public List<BookCopy> bookCopies;
+    public int BookID;
 }

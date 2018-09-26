@@ -16,7 +16,7 @@
         <thead class="thead-light">
         <tr>
             <th>Copy ID</th>
-            <th>Book ID</th>
+            <!--<th>Book ID</th>-->
             <th>Checked Out By</th>
             <th>Return Date</th>
             <th>Delete Book Copy?</th>
@@ -24,16 +24,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="book : ${model.bookCopies}">
-            <td th:text="${book.CopyID}"></td>
-            <td th:text="${book.BookID}"></td>
-            <td th:text="${book.CheckedOutBy}"></td>
-            <td th:text="${book.ReturnDate}"></td>
+        <tr th:each="copy : ${model.bookCopies}">
+            <td th:text="${copy.CopyID}"></td>
+            <!--<td th:text="${copy.BookID}"></td>-->
+            <td th:text="${copy.CheckedOutBy}"></td>
+            <td th:text="${copy.ReturnDate}"></td>
             <td>
-                <a th:href="${'/allBooks/bookcopy/delete?copyId=' + book.CopyID + '&bookId=' + book.BookID}">Delete</a>
+                <a th:href="${'/allBooks/bookcopy/delete?copyId=' + copy.CopyID + '&bookId=' + copy.BookID}">Delete</a>
             </td>
             <td>
-                <a th:href="${'/allBooks/bookcopy/checkOut/?copyId=' + book.CopyID}">Check Out</a>
+                <a th:href="${'/allBooks/bookcopy/checkOut/?copyId=' + copy.CopyID + '&bookId=' + copy.BookID}">Check Out</a>
             </td>
         </tr>
         </tbody>
@@ -42,8 +42,7 @@
     <form id="messageFormBook" th:action="@{/allBooks/bookcopy/add}" method="post">
         <div>
             <label>
-                Book ID:
-                <input type="text" name="BookID">
+                <input type="hidden" name="BookID" th:value="${model.BookID}">
             </label>
         </div>
         <div>

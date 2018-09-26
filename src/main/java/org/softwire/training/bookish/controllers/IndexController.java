@@ -75,7 +75,6 @@ public class IndexController {
 
     //adds a customer//
     @RequestMapping("/Customers/add")
-    //gets the push from customer html and makes it into customer object//
     RedirectView addCustomer(@ModelAttribute Customers customers) {
 
         //adds it to list in customer service//
@@ -87,7 +86,6 @@ public class IndexController {
 
     //deletes a customer//
     @RequestMapping("/Customers/delete")
-    //gets personId as int from customers class//
     RedirectView deleteCustomer(@RequestParam int personId) {
 
         //calls delete customer in customerService//
@@ -99,7 +97,6 @@ public class IndexController {
 
     //searches for books//
     @RequestMapping("/allBooks/search")
-    //gets your search input from books html as string//
     ModelAndView searchForBook(@RequestParam String BookSearched) {
 
         //makes books into list equal what you've searched//
@@ -133,7 +130,6 @@ public class IndexController {
     @Autowired
     private CustomerService customerService;
 
-    //displays table of all customers//
     @RequestMapping("/Customers")
     ModelAndView customers() {
         //creates list customers with all the customers//
@@ -159,6 +155,9 @@ public class IndexController {
         //creates new page instance to display the book copies and then sends the page the list//
         BookCopyPageModel bookCopyPageModel = new BookCopyPageModel();
         bookCopyPageModel.bookCopies = allBookCopies;
+
+        //setting book id//
+        bookCopyPageModel.BookID = bookId;
 
         //creates page using "books" html and class bookPageModel, using model to call the class//
         return new ModelAndView("bookCopies", "model", bookCopyPageModel);
@@ -188,14 +187,16 @@ public class IndexController {
     private CheckoutService checkoutService;
 
     @RequestMapping("/allBooks/bookcopy/checkOut")
-     ModelAndView addCheckOut(@RequestParam int copyId) {
+     ModelAndView addCheckOut(@RequestParam int copyId, @RequestParam int bookId) {
 
         //creates list customers with all the customers//
         List<Customers> allCustomers = customerService.getAllCustomers();
 
         //creates new instance of the page//
-       CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
+        CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
         checkOutPageModel.customers = allCustomers;
+        checkOutPageModel.copyId = copyId;
+        checkOutPageModel.bookId = bookId;
 
         //"/allBooks/bookcopy/checkOut?copyId=" + copyId
         return new ModelAndView("checkOut","model",checkOutPageModel);
@@ -215,41 +216,22 @@ public class IndexController {
         return new ModelAndView("customers", "model", checkoutPageModel);
 
     }
-//
-//        //displays table of all books//
-//        @RequestMapping("/checkOut")
-//        ModelAndView checkOut() {
-//            //makes customers into list equal to what you've searched//
-//            List<Customers> allCustomers = checkoutService
-//            List<Book> allBooks;
-//            List<BookCopy> allBookCopies;
-//
-//            CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
-//
-//            checkOutPageModel.customers = allCustomers;
-//            checkOutPageModel.books = allBooks;
-//            checkOutPageModel.bookCopies = allBookCopies;
-//
-//            return new ModelAndView("checkOut","model",checkOutPageModel);
-//        }
-//
-//
-//    @RequestMapping("/checkOut/search")
-//    ModelAndView searchForCustomersAndBooks(@RequestParam String CustomerSearched, @RequestParam String BookSearched, @RequestParam String CopySearched) {
-//
-//        //makes customers into list equal to what you've searched//
-//        List<Customers> allCustomers = checkoutService.searchForCustomers(CustomerSearched);
-//        List<Book> allBooks =checkoutService.searchForBook(BookSearched);
-//        List<BookCopy> allBookCopies = checkoutService.searchForBookCopy(CopySearched);
-//
-//        //creates new instance of the page//
-//        CheckOutPageModel checkOutPageModel = new CheckOutPageModel();
-//
-//        checkOutPageModel.customers = allCustomers;
-//        checkOutPageModel.books = allBooks;
-//        checkOutPageModel.bookCopies = allBookCopies;
-//
-//        //re-displays the page with only the customers you searched showing//
-//        return new ModelAndView("checkOut", "model", checkOutPageModel);
-//    }
+
+    @RequestMapping("/allBooks/bookcopy/checkOut/add")
+    RedirectView addCheckOut(@RequestParam int copyId, @RequestParam int personId, @RequestParam int bookId) {
+
+        bookCopyService.addCheckOut(personId, copyId);
+
+        return new RedirectView("/allBooks/bookcopy?bookId=" + bookId);
+    }
+
+    @RequestMapping("allBooks/bookcopy/checkOut/delete")
+    RedirectView deleteCheckOut(@RequestParam int copyId, @RequestParam int bookId) {
+
+        //calls delete customer in customerService//
+        bookCopyService.deleteCheckOut(copyId);
+
+        //reloads the page//
+        return new RedirectView("/allBooks/bookcopy?bookId=" + bookId);
+    }
 }
